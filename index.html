@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .draggable {
+            width: 150px;
+            height: 30px;
+            margin: 5px;
+            padding: 5px;
+            background-color: lightblue;
+            cursor: move;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .droppable {
+            width: 800px;
+            min-height: 500px;
+            margin: 10px auto;
+            background-color: lightgreen;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .element-list, aside {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            position: fixed;
+            width: 200px;
+        }
+
+        .element-list {
+            left: 10px;
+            top: 10px;
+        }
+
+        aside {
+            right: 10px;
+            top: 10px;
+        }
+
+        .element-list input, aside input, aside select {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .section {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .section > div {
+            width: 49%;
+            min-height: 50px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .section-header,
+        .section-footer {
+            flex-direction: row;
+        }
+
+        .section-detail {
+            flex-direction: column;
+        }
+
+        .minimize-button {
+            cursor: pointer;
+            font-size: 14px;
+            color: #007bff;
+            background: none;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML Page with Drag and Drop Functionality</h1>
+
+    <div class="main-container">
+        <!-- Container for draggable elements -->
+        <div class="element-list">
+            <button class="minimize-button" onclick="toggleVisibility('element-list-content')">Elements ▼</button>
+            <div id="element-list-content">
+                <h2>Draggable Elements</h2>
+                <div id="V1" class="draggable" draggable="true">V1</div>
+                <div id="INVOICE_ID" class="draggable" draggable="true">INVOICE_ID</div>
+                <div id="PO_NUMBER" class="draggable" draggable="true">PO_NUMBER</div>
+                <div id="VOUCHERNO" class="draggable" draggable="true">VOUCHERNO</div>
+                <div id="VOUCHERDATE" class="draggable" draggable="true">VOUCHERDATE</div>
+                <div id="VENDORCODE" class="draggable" draggable="true">VENDORCODE</div>
+                <div id="VENDORNAME" class="draggable" draggable="true">VENDORNAME</div>
+                <div id="SITE" class="draggable" draggable="true">SITE</div>
+                <div id="INVOICETYPE" class="draggable" draggable="true">INVOICETYPE</div>
+                <div id="INVOICENO" class="draggable" draggable="true">INVOICENO</div>
+                <div id="INVOICEDATE" class="draggable" draggable="true">INVOICEDATE</div>
+                <div id="INVOICEAMOUNT" class="draggable" draggable="true">INVOICEAMOUNT</div>
+                <div id="DESCRIPTION" class="draggable" draggable="true">DESCRIPTION</div>
+                <div id="ACCOUNTCODE" class="draggable" draggable="true">ACCOUNTCODE</div>
+                <div id="ACCOUNTDESC" class="draggable" draggable="true">ACCOUNTDESC</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Droppable area -->
+            <div id="droppable1" class="droppable">
+                <div class="section section-header">
+                    <div id="headerA" class="drop-zone">Header Column A</div>
+                    <div id="headerB" class="drop-zone">Header Column B</div>
+                </div>
+                <div class="section section-detail">
+                    <div id="detailA" class="drop-zone">Detail Row A</div>
+                    <div id="detailB" class="drop-zone">Detail Row B</div>
+                </div>
+                <div class="section section-footer">
+                    <div id="footerA" class="drop-zone">Footer Column A</div>
+                    <div id="footerB" class="drop-zone">Footer Column B</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <aside>
+            <button class="minimize-button" onclick="toggleVisibility('style-control-content')">Style Control ▼</button>
+            <div id="style-control-content">
+                <h2>Style Control</h2>
+                <label for="backgroundColor">Background Color:</label>
+                <input type="color" id="backgroundColor" name="backgroundColor">
+                
+                <label for="borderBottom">Border Bottom:</label>
+                <input type="text" id="borderBottom" name="borderBottom" placeholder="e.g., 1px solid black">
+                
+                <label for="borderLeft">Border Left:</label>
+                <input type="text" id="borderLeft" name="borderLeft" placeholder="e.g., 1px solid black">
+                
+                <label for="borderRight">Border Right:</label>
+                <input type="text" id="borderRight" name="borderRight" placeholder="e.g., 1px solid black">
+                
+                <label for="borderTop">Border Top:</label>
+                <input type="text" id="borderTop" name="borderTop" placeholder="e.g., 1px solid black">
+                
+                <label for="padding">Padding:</label>
+                <input type="text" id="padding" name="padding" placeholder="e.g., 10px">
+                
+                <label for="textAlign">Text Alignment:</label>
+                <select id="textAlign" name="textAlign">
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+
+                <label for="width">Width:</label>
+                <input type="text" id="width" name="width" placeholder="e.g., 150px">
+
+                <label for="borderRadius">Border Radius:</label>
+                <input type="text" id="borderRadius" name="borderRadius" placeholder="e.g., 5px">
+
+                <label for="boxShadow">Box Shadow:</label>
+                <input type="text" id="boxShadow" name="boxShadow" placeholder="e.g., 2px 2px 5px gray">
+                
+                <button id="applyStyles">Apply Styles</button>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        let selectedElement = null;
+
+        const draggables = document.querySelectorAll('.draggable');
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.id);
+            });
+
+            draggable.addEventListener('click', () => {
+                selectedElement = draggable;
+            });
+        });
+
+        dropZones.forEach(dropZone => {
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const id = e.dataTransfer.getData('text/plain');
+                const draggableElement = document.getElementById(id);
+                const clone = draggableElement.cloneNode(true);
+                clone.addEventListener('click', () => {
+                    selectedElement = clone;
+                });
+                dropZone.appendChild(clone);
+                selectedElement = clone;
+            });
+        });
+
+        document.getElementById('applyStyles').addEventListener('click', () => {
+            if (selectedElement) {
+                const backgroundColor = document.getElementById('backgroundColor').value;
+                const borderBottom = document.getElementById('borderBottom').value;
+                const borderLeft = document.getElementById('borderLeft').value;
+                const borderRight = document.getElementById('borderRight').value;
+                const borderTop = document.getElementById('borderTop').value;
+                const padding = document.getElementById('padding').value;
+                const textAlign = document.getElementById('textAlign').value;
+                const width = document.getElementById('width').value;
+                const borderRadius = document.getElementById('borderRadius').value;
+                const boxShadow = document.getElementById('boxShadow').value;
+
+                if (backgroundColor) selectedElement.style.backgroundColor = backgroundColor;
+                if (borderBottom) selectedElement.style.borderBottom = borderBottom;
+                if (borderLeft) selectedElement.style.borderLeft = borderLeft;
+                if (borderRight) selectedElement.style.borderRight = borderRight;
+                if (borderTop) selectedElement.style.borderTop = borderTop;
+                if (padding) selectedElement.style.padding = padding;
+                selectedElement.style.textAlign = textAlign;
+                if (width) selectedElement.style.width = width;
+                if (borderRadius) selectedElement.style.borderRadius = borderRadius;
+                if (boxShadow) selectedElement.style.boxShadow = boxShadow;
+            }
+        });
+
+        function toggleVisibility(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
